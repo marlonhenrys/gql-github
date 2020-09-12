@@ -1,0 +1,16 @@
+{
+  "name": "gql-github",
+  "description": "Mining GitHub repositories",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/marlonhenrys/gql-github",
+  "author": "Marlon Henrique",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "objects-to-csv": "^1.3.6"
+  }
+}
