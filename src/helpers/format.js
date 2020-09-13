@@ -4,8 +4,7 @@ const { blue } = require('../config/console')
 module.exports = nodes => {
     console.log(blue, '\nFormatando dados...')
 
-    const nodesFormat = nodes.map(node => {
-
+    return nodes.map(node => {
         const nameWithOwner = node.nameWithOwner
         const starCount = node.stargazers.totalCount
         const releaseCount = node.releases.totalCount
@@ -28,6 +27,4 @@ module.exports = nodes => {
 
         return format
     })
-
-    return nodesFormat
 }
