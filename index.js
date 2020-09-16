@@ -4,7 +4,7 @@ const mining = require('./src/mining')
  * The requests are paginated with 10 elements per page.
  * 
  * Mining parameters:
- * 1. Total pages (max): integer
+ * 1. Total pages (maximum): integer
  * 2. Current page (initial) : integer
  * 3. Cursor (initial) : string
  * 4. Debug (optional) : boolean
