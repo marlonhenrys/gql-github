@@ -57,9 +57,9 @@ $ npm start
 maximum = 100
 limit = 10
 initial = 1
-cursor = null,
-filename = 'repos',
-debug = false,
+cursor = null
+filename = 'repos'
+debug = false
 ```
 
 > **OBS:** Todos os parâmetros são opcionais.
