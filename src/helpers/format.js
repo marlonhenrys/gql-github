@@ -12,7 +12,7 @@ module.exports = nodes => {
         const primaryLanguage = node.primaryLanguage ? node.primaryLanguage.name : 'N/A'
         const issueRatio = (node.closedIssues.totalCount / node.totalIssues.totalCount || 0).toFixed(2)
         const lifetime = parseInt(dateDiff(node.createdAt) / 365)
-        const lastUpdate = dateDiff(node.updatedAt)
+        const lastUpdate = dateDiff(node.pushedAt)
 
         const format = {
             'Name with owner': nameWithOwner,

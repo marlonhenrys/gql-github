@@ -1,30 +1,39 @@
 const fetch = require('./helpers/fetch')
 const format = require('./helpers/format')
 const toFile = require('./helpers/toFile')
-const { red, green, magenta } = require('./config/console')
+const { red, green, yellow, magenta } = require('./config/console')
 
-module.exports = async (totalPages, currentPage, cursor, debug) => {
+module.exports = async params => {
 
-    while (currentPage <= totalPages) {
+    while (params.currentPage <= params.totalPages) {
 
         try {
-            console.log('\nBuscando dados... ' + `Progresso: ${currentPage}/${totalPages}`)
-            const { nodes, pageInfo } = await fetch(cursor)
+            const { nodes, pageInfo } = await fetch(params)
 
-            const formattedNodes = format(nodes)
-            await toFile(formattedNodes)
+            if (nodes != 0) {
+                const formattedNodes = format(nodes)
+                await toFile(formattedNodes, params.filename)
+                console.log(green, '\nDados coletados.')
+            }
 
-            console.log(green, '\nDados coletados.')
+            if (params.debug) {
+                console.log(magenta, '\nEnd cursor: ' + pageInfo.endCursor)
+            }
 
-            cursor = pageInfo.endCursor || null
-            currentPage++
-
-            if (debug) { console.log(magenta, '\nEnd Cursor: ' + cursor) }
+            if (pageInfo.hasNextPage) {
+                params.cursor = pageInfo.endCursor
+                params.currentPage++
+            } else {
+                console.log(yellow, '\nNão há mais dados para coletar.')
+                break
+            }
 
         } catch (error) {
             console.log(red, error.message)
             console.log('\nTentando novamente...')
         }
     }
-    console.log('\nColeta de dados finalizada!\n')
+
+    const ratio = parseInt((params.currentPage / params.totalPages) * 100)
+    console.log(`\nColeta de dados finalizada! (${ratio}%)\n`)
 }

@@ -1,35 +1,36 @@
-module.exports = after => `
+module.exports = (limit, cursor) => `
 {
-    search(type: REPOSITORY, query: "stars:>13680", first: 10${after}) {
-    repositoryCount
-    pageInfo{
-        endCursor
-    }
-    nodes {
-        ... on Repository {
-        nameWithOwner
-        createdAt
-        updatedAt
-        primaryLanguage {
-            name
+    search(type: REPOSITORY, query: "stars:>10000", first: ${limit}, after: ${cursor}) {
+        repositoryCount
+        pageInfo {
+            hasNextPage
+            endCursor
         }
-        stargazers {
-            totalCount
+        nodes {
+            ... on Repository {
+                nameWithOwner
+                createdAt
+                pushedAt
+                primaryLanguage {
+                    name
+                }
+                stargazers {
+                    totalCount
+                }
+                releases {
+                    totalCount
+                }
+                mergedPRs: pullRequests(states: MERGED) {
+                    totalCount
+                }
+                closedIssues: issues(states: CLOSED) {
+                    totalCount
+                }
+                totalIssues: issues {
+                    totalCount
+                }
+            }
         }
-        releases {
-            totalCount
-        }
-        mergedPRs: pullRequests(states: MERGED) {
-            totalCount
-        }
-        closedIssues: issues(states: CLOSED) {
-            totalCount
-        }
-        totalIssues: issues {
-            totalCount
-        }
-        }
-    }
     }
 }  
 `
